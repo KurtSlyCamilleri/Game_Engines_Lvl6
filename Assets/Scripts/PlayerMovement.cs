@@ -1,5 +1,6 @@
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
     public float baseMoveSpeed = 5f;
@@ -85,9 +86,25 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetButtonDown("Jump") && isGrounded) {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+        else if (isGrounded)
+        {
+            StopCoroutine(MyCoroutine());
+            rb.mass = 1f;
+        }
+        else
+        {
+            StartCoroutine(MyCoroutine());
+        }
 
     }
-     
+
+    private IEnumerator MyCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        rb.mass = 6f;
+        Debug.Log("Waited 1 seconds!");
+    }
+
     void JumpOffLadder() {
         if (isOnLadder && Input.GetButtonDown("Jump")) {
             Vector3 jumpDirection = -transform.forward + Vector3.up;// Calculate backward jump direction
