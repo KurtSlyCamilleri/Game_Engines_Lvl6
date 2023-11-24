@@ -4,26 +4,27 @@ using UnityEngine;
 
 public class MoveWithPlatform : MonoBehaviour
 {
-    
-    private void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("Platform")) {
-            transform.SetParent(collision.gameObject.transform);
-        }
-    }
-    private void OnCollisionExit(Collision collision) {
-        if (transform.parent == collision.gameObject.transform) {
-            transform.SetParent(null);
-        }
-    }
-    // Start is called before the first frame update
-    void Start()
+
+    void OnCollisionEnter(Collision collision)
     {
-        
+        Rigidbody otherRigidbody = collision.collider.GetComponent<Rigidbody>();
+
+        if (otherRigidbody != null)
+        {
+            // Parent the other Rigidbody to the moving platform
+            otherRigidbody.transform.parent = transform;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnCollisionExit(Collision collision)
     {
-        
+        Rigidbody otherRigidbody = collision.collider.GetComponent<Rigidbody>();
+
+        if (otherRigidbody != null)
+        {
+            // Unparent the other Rigidbody from the moving platform
+            otherRigidbody.transform.parent = null;
+        }
     }
+
 }
