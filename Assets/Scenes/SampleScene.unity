@@ -23283,6 +23283,22 @@ PrefabInstance:
       propertyPath: baseMoveSpeed
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 6996914198478281940, guid: 6bb2676c994887c488b41f7d58ae86ec, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.15688461
+      objectReference: {fileID: 0}
+    - target: {fileID: 6996914198478281940, guid: 6bb2676c994887c488b41f7d58ae86ec, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.15688461
+      objectReference: {fileID: 0}
+    - target: {fileID: 6996914198478281940, guid: 6bb2676c994887c488b41f7d58ae86ec, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.15688461
+      objectReference: {fileID: 0}
+    - target: {fileID: 6996914198478281940, guid: 6bb2676c994887c488b41f7d58ae86ec, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
