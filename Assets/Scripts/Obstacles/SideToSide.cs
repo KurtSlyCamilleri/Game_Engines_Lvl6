@@ -2,36 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SideToSide : MonoBehaviour
-{
-    public Collider leftCollider;
-    public Collider rightCollider;
-    private Collider colliderOpt;
-    public float moveSpeed = 5f;
+public class SideToSide : MonoBehaviour {
+    public GameObject startPoint;
+    public GameObject endPoint;
+    public float speed = 5f;
 
-    private bool isMovingRight = true; // Initial direction
+    private bool movingRight = true;
 
-    private void Awake() {
-        colliderOpt = GetComponent<Collider>();
+    private void Update() {
+        Vector3 targetPosition = movingRight ? endPoint.transform.position : startPoint.transform.position;
+        targetPosition.y = transform.position.y; // Ignore up and down movement
+
+        MoveTowards(targetPosition);
     }
 
-    void Update() {
-        
-        if (IsCollidingWith(leftCollider)) { // Check if the object is colliding with the left collider
-            isMovingRight = true; // Collided with left, so move right
-        }
-        if (IsCollidingWith(rightCollider)) { // Check if the object is colliding with the right collider
-            isMovingRight = false; // Collided with right, so move left
-        }
-        if (isMovingRight) { // Move the object based on the current direction
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-        } else {
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+    private void MoveTowards(Vector3 targetPosition) {
+        float step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+
+        // Check if the object reached the current target position
+        if (Vector3.Distance(transform.position, targetPosition) < 0.001f) {
+            // If at the start point, start moving to the right; if at the end point, start moving to the left
+            movingRight = !movingRight;
         }
     }
 
-    // Function to check if the object is colliding with a specific collider
-    private bool IsCollidingWith(Collider collider) {
-        return collider.bounds.Intersects(colliderOpt.bounds);
-    }
 }
