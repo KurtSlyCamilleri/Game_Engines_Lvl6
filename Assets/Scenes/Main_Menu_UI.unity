@@ -205,7 +205,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1083159}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 467661423}
+        m_TargetAssemblyTypeName: MainManu, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SampleScene
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1083159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,7 +472,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 218730762}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 467661423}
+        m_TargetAssemblyTypeName: MainManu, Assembly-CSharp
+        m_MethodName: SwapPannel
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &218730762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,7 +740,7 @@ GameObject:
   - component: {fileID: 467661423}
   m_Layer: 5
   m_Name: Main_Manu_Canvas
-  m_TagString: Untagged
+  m_TagString: UiCanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1574,7 +1598,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1685539505}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 467661423}
+        m_TargetAssemblyTypeName: MainManu, Assembly-CSharp
+        m_MethodName: Quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1685539505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1908,7 +1944,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2145266710}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 467661423}
+        m_TargetAssemblyTypeName: MainManu, Assembly-CSharp
+        m_MethodName: SwapPannel
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2145266710
 MonoBehaviour:
   m_ObjectHideFlags: 0

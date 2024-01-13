@@ -7,6 +7,7 @@ TagManager:
   - WallObstacle
   - Platform
   - Interactable
+  - UiCanvas
   layers:
   - Default
   - TransparentFX
