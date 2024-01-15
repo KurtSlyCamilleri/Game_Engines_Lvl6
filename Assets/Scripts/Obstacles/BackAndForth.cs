@@ -4,32 +4,48 @@ public class BackAndForth : MonoBehaviour {
     public GameObject startPoint;
     public GameObject endPoint;
     public float speed = 5f;
+    public float slowdownDistance = 2f;
+    public float accelerationDistance = 2f;
 
-    private bool movingTowardsEnd = true;
+    private Transform target;
     private Rigidbody rigidBody;
 
     private void Start() {
         rigidBody = GetComponent<Rigidbody>();
-        rigidBody.isKinematic = true; // Set rigidbody to kinematic
+        rigidBody.isKinematic = true;
+        target = endPoint.transform;
     }
 
     private void Update() {
-        Vector3 targetPosition = movingTowardsEnd ? endPoint.transform.position : startPoint.transform.position;
-        targetPosition.y = transform.position.y; // Ignore up and down movement
-
-        MoveTowards(targetPosition);
+        MoveTowards(target.position);
     }
 
     private void MoveTowards(Vector3 targetPosition) {
-        float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+        float step = CalculateMovementStep(targetPosition);
+
+        if (step > 0.001f) {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+        } else {
+            target = (target == startPoint.transform) ? endPoint.transform : startPoint.transform;
+        }
     }
 
+    private float CalculateMovementStep(Vector3 targetPosition) {
+        float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+        float accelerationFactor = Mathf.Clamp01(distanceToTarget / accelerationDistance);
+        float slowdownFactor = Mathf.Clamp01(distanceToTarget / slowdownDistance);
+        float currentSpeed = speed * Mathf.Lerp(accelerationFactor, slowdownFactor, slowdownFactor);
+        return currentSpeed * Time.deltaTime;
+    }
+    
+
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject == startPoint) {
-            movingTowardsEnd = true;
-        } else if (other.gameObject == endPoint) {
-            movingTowardsEnd = false;
+        GameObject otherGameObject = other.gameObject;
+
+        if (otherGameObject == startPoint) {
+            target = endPoint.transform;
+        } else if (otherGameObject == endPoint) {
+            target = startPoint.transform;
         }
     }
 }

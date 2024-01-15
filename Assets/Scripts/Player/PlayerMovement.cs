@@ -24,9 +24,9 @@ public class PlayerMovement : MonoBehaviour {
     void Update() {
         if (isParalyzed == false) {
             MovementInput();
-            TurnPlayer(); 
+            TurnPlayer();
+            Jump();
         }
-        Jump();
         CheckGround();
         CheckLadder();
         Climbing();

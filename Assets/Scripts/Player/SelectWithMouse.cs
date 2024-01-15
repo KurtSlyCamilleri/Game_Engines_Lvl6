@@ -25,7 +25,7 @@ public class SelectWithMouse : MonoBehaviour {
                     //hovering but not pressing: provide visual indication
                 }
         }else{
-          Debug.Log("NotTouching");
+          //Debug.Log("NotTouching");
         }
     }
 }

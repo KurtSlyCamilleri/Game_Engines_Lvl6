@@ -4,48 +4,62 @@ using UnityEngine;
 using Cinemachine;
 
 public class FlyThroughTest : MonoBehaviour {
+    
     public GameObject[] FlyThroughPoints;
     [SerializeField] private CinemachineDollyCart[] dollyCarts;
     public CinemachineVirtualCamera[] virtualCameras;
     public GameObject Player;
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField]private Rigidbody playerRigidbody;
+    private bool isCutsceneActive = false;
 
     void Start() {
-        foreach (var dollyCart in dollyCarts) {//set the speed of each dolly cart to - to ensure they start stationary
+        foreach (var dollyCart in dollyCarts) {
             dollyCart.m_Speed = 0f;
         }
+        playerRigidbody = Player.GetComponent<Rigidbody>();
     }
 
     void Update() {
-        CheckFlyThroughPoints();
+        if (!isCutsceneActive) {
+            CheckFlyThroughPoints();
+        }
     }
 
     void CheckFlyThroughPoints() {
         for (int i = 0; i < FlyThroughPoints.Length; i++) {
-            Collider flyThroughCollider = FlyThroughPoints[i].GetComponent<Collider>();//get the collider of the current flythrough point
-            if (flyThroughCollider.bounds.Contains(Player.transform.position)) {//check if the player's position is within the bounds of the flythrough point
-                FlyThroughPoints[i].SetActive(false);//deactivate flythroughpoint after being triggered
-                StartCoroutine(ActivateFlyThroughMethod(i));//start the activation coroutine for the currennt flythough point
-                break;//exit the loop after activating the first flythrough point to avoid redundant activations
+            Collider flyThroughCollider = FlyThroughPoints[i].GetComponent<Collider>();
+            if (flyThroughCollider.bounds.Contains(Player.transform.position)) {
+                FlyThroughPoints[i].SetActive(false);
+                StartCoroutine(ActivateFlyThroughMethod(i));
+                break;
             }
         }
     }
 
-
     IEnumerator ActivateFlyThroughMethod(int index) {
-        switch (index) {//switch between different flythough points based on the index
+        isCutsceneActive = true;
+        playerRigidbody.constraints = RigidbodyConstraints.FreezePosition;
+        playerMovement.isParalyzed = true;
+
+        switch (index) {
             case 0:
-                yield return StartCoroutine(FlyThrough1());//star the coroutine for the first flythrough point
+                yield return StartCoroutine(FlyThrough1());
                 break;
             case 1:
-                yield return StartCoroutine(FlyThrough2());//start the coroutine for the second flythrough point
+                yield return StartCoroutine(FlyThrough2());
                 break;
-            // Add more cases for additional flythrough points as needed
             case 2:
                 yield return StartCoroutine(FlyThrough3());
                 break;
             default:
                 yield break;
         }
+
+        isCutsceneActive = false;
+        playerRigidbody.constraints &= ~RigidbodyConstraints.FreezePosition;
+        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        playerMovement.isParalyzed = false;
     }
 
     IEnumerator FlyThrough1() {
@@ -74,4 +88,5 @@ public class FlyThroughTest : MonoBehaviour {
         virtualCameras[0].Priority = 100;
         virtualCameras[3].Priority = 0;
     }
+    
 }
