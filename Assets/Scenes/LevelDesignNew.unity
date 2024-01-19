@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 53628429}
   - component: {fileID: 53628428}
   - component: {fileID: 53628427}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Ladder
   m_TagString: WallObstacle
   m_Icon: {fileID: 0}
@@ -9226,7 +9226,7 @@ GameObject:
   - component: {fileID: 581797239}
   - component: {fileID: 581797238}
   - component: {fileID: 581797237}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Ladder (4)
   m_TagString: WallObstacle
   m_Icon: {fileID: 0}
