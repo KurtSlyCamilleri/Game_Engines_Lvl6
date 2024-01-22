@@ -13,17 +13,41 @@ public class MainMenuHandler : MonoBehaviour {
 
     [SerializeField] GameObject loadingScreen;
 
+    [SerializeField] GameObject audioSourceObject; // Drag your GameObject with AudioSource here
+    [SerializeField] AudioClip audioClip1;
+    [SerializeField] AudioClip audioClip2;
+
+    private AudioSource audioSource;
+
+
     private void Start() {
         VideoPlayerController videoController = Cutscene1Controller.GetComponent<VideoPlayerController>();
 
+        if (audioSourceObject == null) {
+            Debug.LogError("AudioSourceObject is not assigned.");
+            return;
+        }
+
+        audioSource = audioSourceObject.GetComponent<AudioSource>();
+
         if (videoController != null) {
+            PlayAudioClip(audioClip2);
             videoController.StartCutscene();
             videoController.SetOnVideoFinishedAction(() => {
+                PlayAudioClip(audioClip1);
                 Background.SetActive(true);
                 Title.SetActive(true);
             });
         } else {
             Debug.LogError("VideoPlayerController script not found on Cutscene1Controller GameObject.");
+        }
+    }
+    void PlayAudioClip(AudioClip clip) {
+        if (clip != null && audioSource != null) {
+            audioSource.clip = clip;
+            audioSource.Play();
+        } else {
+            Debug.LogError("AudioClip not assigned or AudioSource not found.");
         }
     }
 
@@ -32,7 +56,7 @@ public class MainMenuHandler : MonoBehaviour {
 
         if (videoController != null) {
             // Show loading screen
-            
+            PlayAudioClip(audioClip2);
 
             videoController.StartCutscene();
             videoController.SetOnVideoFinishedAction(() => {
@@ -58,13 +82,13 @@ public class MainMenuHandler : MonoBehaviour {
     }
 
     public void OpenOptions() {
-        ShowLoadingScreen();
-        SceneManager.LoadScene("Options");
+        //ShowLoadingScreen();
+        //SceneManager.LoadScene("Options");
     }
 
     public void OpenCredits() {
-        ShowLoadingScreen();
-        SceneManager.LoadScene("Credits");
+        //ShowLoadingScreen();
+        //SceneManager.LoadScene("Credits");
     }
 
     public void GameExit() {

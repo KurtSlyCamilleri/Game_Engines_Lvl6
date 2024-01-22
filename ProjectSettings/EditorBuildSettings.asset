@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelDesignNew.unity
     guid: bd57e732ad2c71a418cc068c25a9da27
+  - enabled: 1
+    path: Assets/Scenes/ToBeContinued.unity
+    guid: bff3bee7bca2f1a4fb78fd33750d7949
   m_configObjects: {}
