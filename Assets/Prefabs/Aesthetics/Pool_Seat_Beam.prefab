@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -883863111944419665, guid: 3219b153faf88a84bb900efc0df4e5ed, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fb63eac840718ad48baeddc77a9047e6, type: 2}
+      objectReference: {fileID: 2100000, guid: ffbc31a35ac6dc34bb02e66b72bb65da, type: 2}
     - target: {fileID: 919132149155446097, guid: 3219b153faf88a84bb900efc0df4e5ed, type: 3}
       propertyPath: m_Name
       value: Pool_Seat_Beam

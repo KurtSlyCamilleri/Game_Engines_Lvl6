@@ -1,45 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
-public class VideoCutscenes : MonoBehaviour {
-    public GameObject[] colCutscenes; // Cutscenes triggered by colliders
-    public GameObject[] cutsceneTriggers; // Colliders to trigger the cutscenes
-    public GameObject player; // Reference to the player GameObject
-    private bool[] colliderTriggered; // Flag to track whether each collider has triggered a cutscene
+public class VideoPlayerController : MonoBehaviour {
+    [SerializeField] private GameObject videoPlayerGameObject;
+    [SerializeField] private VideoPlayer videoPlayer;
+    [SerializeField] private RawImage rawImage;
+    [SerializeField] private VideoClip videoClip;
+    [SerializeField] private RenderTexture renderTexture;
 
-    void Start() {
-        colliderTriggered = new bool[cutsceneTriggers.Length];
+    private void Start() {
+        
     }
 
-    // Update is called once per frame
-    void Update() {
-        CheckCutsceneTriggers();
-    }
-
-    void CheckCutsceneTriggers() {
-        for (int i = 0; i < cutsceneTriggers.Length; i++) {
-            Collider triggerCollider = cutsceneTriggers[i].GetComponent<Collider>();
-
-            if (triggerCollider.bounds.Contains(player.transform.position) && !colliderTriggered[i]) {
-                Debug.Log("Player entered trigger collider for Cutscene: " + colCutscenes[i].name);//log the cutscene name to the console for debugging
-                PlayCutscene(colCutscenes[i], triggerCollider, i);//play cutscene
-                colliderTriggered[i] = true;//set the flag to indicate that the collider has triggered a cutscene
-                triggerCollider.enabled = false;//add this to flythrough afterwards
-            }
+    public void StartCutscene() {
+        // Make sure all required components are assigned
+        if (videoPlayer == null || rawImage == null || videoClip == null || renderTexture == null) {
+            Debug.LogError("Please assign all components in the inspector.");
+            return;
         }
+
+        // Assign video clip to the video player
+        videoPlayer.clip = videoClip;
+
+        // Assign render texture to the target texture of the video player
+        videoPlayer.targetTexture = renderTexture;
+
+        // Assign render texture to the raw image texture
+        rawImage.texture = renderTexture;
+
+        // Add a listener for the videoPlayer to call a method when the video is finished
+        videoPlayer.loopPointReached += OnVideoFinished;
+        videoPlayerGameObject.SetActive(true);
+
+        // Play the video
+        videoPlayer.Play();
+    }
+    
+    private System.Action onVideoFinishedAction;
+
+    public void SetOnVideoFinishedAction(System.Action action) {
+        onVideoFinishedAction = action;
     }
 
+    private void OnVideoFinished(VideoPlayer vp) {
+        // Deactivate the videoPlayerGameObject when the video is finished
+        videoPlayerGameObject.SetActive(false);
 
-    void PlayCutscene(GameObject cutscene, Collider triggerCollider, int index) {
-        VideoPlayer videoPlayer = cutscene.GetComponent<VideoPlayer>();
+        // Remove the listener to avoid potential issues
+        videoPlayer.loopPointReached -= OnVideoFinished;
 
-        videoPlayer.loopPointReached += delegate {
-            cutscene.SetActive(false);
-        };
+        // Perform the custom action if set
+        onVideoFinishedAction?.Invoke();
 
-        cutscene.SetActive(true);
-        videoPlayer.Play();
+
     }
 }

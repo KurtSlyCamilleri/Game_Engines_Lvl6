@@ -55,7 +55,7 @@ PrefabInstance:
     - target: {fileID: -225316492714693265, guid: b5537a0f144468d48a8bd2748c4b4499, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fb63eac840718ad48baeddc77a9047e6, type: 2}
+      objectReference: {fileID: 2100000, guid: ffbc31a35ac6dc34bb02e66b72bb65da, type: 2}
     - target: {fileID: 919132149155446097, guid: b5537a0f144468d48a8bd2748c4b4499, type: 3}
       propertyPath: m_Name
       value: Pool_Beam_Seperated
@@ -63,7 +63,7 @@ PrefabInstance:
     - target: {fileID: 1155205704492137074, guid: b5537a0f144468d48a8bd2748c4b4499, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fb63eac840718ad48baeddc77a9047e6, type: 2}
+      objectReference: {fileID: 2100000, guid: ffbc31a35ac6dc34bb02e66b72bb65da, type: 2}
     - target: {fileID: 1927373671097070404, guid: b5537a0f144468d48a8bd2748c4b4499, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.00014
@@ -83,7 +83,7 @@ PrefabInstance:
     - target: {fileID: 8606869341913982348, guid: b5537a0f144468d48a8bd2748c4b4499, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fb63eac840718ad48baeddc77a9047e6, type: 2}
+      objectReference: {fileID: 2100000, guid: ffbc31a35ac6dc34bb02e66b72bb65da, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3590229959500277015, guid: b5537a0f144468d48a8bd2748c4b4499, type: 3}

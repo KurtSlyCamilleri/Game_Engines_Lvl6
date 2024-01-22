@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -8,7 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     public bool isGrounded, isOnLadder;
     [System.NonSerialized]public float turnSpeed = 20f;
     public Rigidbody rb;
-    public float raycastDistance = 0.1f;
+    [SerializeField]public float raycastDistance = 0.2f;
     public LayerMask groundLayer;
     public LayerMask ladderLayer;
     public float climbSpeed = 5f, horizontalClimbSpeed = 7f;
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour {
     public bool RMBToggle = false;
     [SerializeField]private UIHandler uihandler;
     public bool selectwithmouse = true, turnwithmouse = false;
+
 
 
     void Start() {
@@ -35,19 +37,30 @@ public class PlayerMovement : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; // Prevents the player from flipping over
     }
-    
+
     //basic movement
     void MovementInput() {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
+
         Vector3 moveDirection = new Vector3(horizontalInput, 0f, verticalInput);
-        MovePlayer(moveDirection);
+
+        // Call MovePlayer with the regular movement speed
+        MovePlayer(moveDirection, baseMoveSpeed);
+
+        // Call Stride to handle the stride mechanic
+        Stride(horizontalInput);
     }
-    void MovePlayer(Vector3 moveDirection) {
-        Vector3 targetVelocity = transform.TransformDirection(moveDirection) * baseMoveSpeed;
+
+    
+
+    void MovePlayer(Vector3 moveDirection, float moveSpeed) {
+        Vector3 targetVelocity = transform.TransformDirection(moveDirection) * moveSpeed;
         rb.velocity = new Vector3(targetVelocity.x, rb.velocity.y, targetVelocity.z);
     }
-    
+
+
+
     //Mouse Behaviour
     void TurnPlayer() {
         if (Input.GetMouseButtonDown(1)) {
@@ -107,6 +120,23 @@ public class PlayerMovement : MonoBehaviour {
             // Only update the vertical and horizontal components of the velocity
             rb.velocity = new Vector3(climbVelocity.x, climbVelocity.y, 0f);
 
+        }
+    }
+
+
+    void Stride(float horizontalInput) {
+        // Check if Shift key is held down
+        bool isSprinting = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
+        // Set the speed based on whether Shift is held down
+        float moveSpeed = isSprinting ? baseMoveSpeed * 1.5f : baseMoveSpeed;
+
+      
+        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && isSprinting) {//check if a or d are pressed while shift is held down
+            // Apply the stride speed boost to the side
+            float strideSpeed = moveSpeed * 2f;
+            Vector3 strideDirection = new Vector3(horizontalInput, 0f, 0f);
+            MovePlayer(strideDirection, strideSpeed);
         }
     }
 }

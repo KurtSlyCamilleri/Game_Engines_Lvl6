@@ -55,11 +55,11 @@ PrefabInstance:
     - target: {fileID: -7978367845208419680, guid: 75751a87ba33d1a45a0babaad5095ecc, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fb63eac840718ad48baeddc77a9047e6, type: 2}
+      objectReference: {fileID: 2100000, guid: ffbc31a35ac6dc34bb02e66b72bb65da, type: 2}
     - target: {fileID: -2683112002648850734, guid: 75751a87ba33d1a45a0babaad5095ecc, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fb63eac840718ad48baeddc77a9047e6, type: 2}
+      objectReference: {fileID: 2100000, guid: 3d4219180564b5e41974b58886b82d57, type: 2}
     - target: {fileID: 919132149155446097, guid: 75751a87ba33d1a45a0babaad5095ecc, type: 3}
       propertyPath: m_Name
       value: Pool_seating_seperated

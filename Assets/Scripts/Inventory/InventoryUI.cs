@@ -3,26 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryUI : MonoBehaviour
-{
-    public Inventory inventory;
+public class InventoryUI : MonoBehaviour {
 
-    public Image prefab;
+    [SerializeField] private GameObject OpenedSuitcase;
+    [SerializeField] private GameObject ClosedSuitcase;
+    [SerializeField] private GameObject InventorySlider;
+    private bool invEnabled = false;
 
-    private List<Image> images = new List<Image>();
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            // Toggle the inventory state
+            invEnabled = !invEnabled;
 
-    private void OnEnable() {
-        foreach (Image child in images) {
-            Destroy(child.gameObject);
+            // Call the appropriate method based on the inventory state
+            if (invEnabled) {
+                OpenInventory();
+            } else {
+                CloseInventory();
+            }
         }
-        images.Clear();
+    }
 
-        // Create as many items in the visible inventory as there are in the inventory itself
-        foreach (Item item in inventory.items) {
-            Image img = Instantiate(prefab, transform); // Instantiate the item image accordingly
-            img.sprite = item.sprite; // Change the sprite of the image to the sprite of the item that populates the inventory slot 
-            images.Add(img);
-        }
+    public void OpenInventory() {
+        OpenedSuitcase.SetActive(true);
+        ClosedSuitcase.SetActive(false);
+        InventorySlider.SetActive(true);
+    }
 
+    public void CloseInventory() {
+        ClosedSuitcase.SetActive(true);
+        OpenedSuitcase.SetActive(false);
+        InventorySlider.SetActive(false);
     }
 }

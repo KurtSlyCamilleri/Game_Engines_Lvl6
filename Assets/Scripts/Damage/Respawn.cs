@@ -10,31 +10,50 @@ public class Respawn : MonoBehaviour {
     public PlayerMovement PlayerMovement;
     private int lastSpawnPointIndex = 0;
     private bool isTouchingSpawn = false;
-
+    [SerializeField] private AudioSource SpawnAudioSource;
+    [SerializeField] private AudioClip deathSound;
+    private bool hasPlayerHitSpawn = false;
+    [SerializeField] private GameObject RespawnCutscene;
 
     void Update() {
         UpdateIsTouchingSpawn();
         detectLastSpawnObject();
-        if (GameManager.playerHealth <= 0 && isTouchingSpawn == false) { // if player dies, respawn
+        if (GameManager.playerHealth <= 0 && !isTouchingSpawn) { // if player dies, respawn
             Spawn();
         }
     }
 
     private void Spawn() {
+        PlayDeathSound();
         MovePlayerToLastSpawnPoint();
         GameManager.playerHealth = 3;
         LoadingScreen();
         //call loading
     }
 
+    private void PlayDeathSound() {
+        if (SpawnAudioSource != null && deathSound != null) {
+            SpawnAudioSource.PlayOneShot(deathSound);
+        }
+    }
+
     private void detectLastSpawnObject() {// find spawn location
         for (int i = 0; i < SpawnPoints.Length; i++) {
             Collider spawnCollider = SpawnPoints[i].GetComponent<Collider>();
 
-            if (spawnCollider.bounds.Contains(Player.transform.position)) {
-                
-                //Debug.Log("Player hit spawn point at index: " + i);
+            if (spawnCollider.bounds.Contains(Player.transform.position) && i > 0 && !hasPlayerHitSpawn) {
+                VideoPlayerController videoController = RespawnCutscene.GetComponent<VideoPlayerController>();
+
+                if (videoController != null) {
+                    videoController.StartCutscene();
+                    //videoController.SetOnVideoFinishedAction(() => {
+
+                    //});
+                } else {
+                    Debug.LogError("VideoPlayerController script not found on Cutscene1Controller GameObject.");
+                }
                 lastSpawnPointIndex = i;
+                hasPlayerHitSpawn = true;
             }
         }
     }
@@ -44,7 +63,6 @@ public class Respawn : MonoBehaviour {
         Rigidbody playerRigidbody = Player.GetComponent<Rigidbody>();
         playerRigidbody.position = SpawnPoints[lastSpawnPointIndex].transform.position;
     }
-   
 
     private void UpdateIsTouchingSpawn() {
         isTouchingSpawn = false;

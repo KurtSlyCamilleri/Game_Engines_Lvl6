@@ -5,8 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AITypeThree : MonoBehaviour
-{
+public class AITypeThree : MonoBehaviour{
     public Transform player;
     public float fleeDistance = 10f;
     public float stopFleeDistance = 30f;
@@ -20,11 +19,11 @@ public class AITypeThree : MonoBehaviour
 
 
     private void Start() {
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();//get the navmesh agent component
     }
     private void Update() {
-        isPlayerInSight = IsPlayerInSight();
-        if(isPlayerInSight && !isTouchingVent) {
+        isPlayerInSight = IsPlayerInSight();//turn the bool method into a bool variable
+        if(isPlayerInSight && !isTouchingVent) {//check if the player is in sight and if it is touching the vent
             PlayerInSight();
             ExploreRandomly();
         } else {
@@ -34,7 +33,7 @@ public class AITypeThree : MonoBehaviour
         CheckForVent();
         IsTouchingVent();
     }
-    void PlayerInSight() {
+    void PlayerInSight() {//things to do when the player is in sight
         float distance = Vector3.Distance(transform.position, player.position);
         if(distance < fleeDistance) {
             Vector3 fleeDirection = transform.position - player.position;
@@ -51,7 +50,7 @@ public class AITypeThree : MonoBehaviour
             agent.SetDestination(targetPosition);
         }
     }
-    bool IsPlayerInSight() {
+    bool IsPlayerInSight() {//check if the player is in direct line of sight
         RaycastHit hit;
         if(Physics.Raycast(transform.position, player.position - transform.position, out hit)) {
             return hit.collider.gameObject == player.gameObject;

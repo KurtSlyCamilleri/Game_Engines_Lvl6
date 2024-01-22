@@ -17,7 +17,6 @@ public class FlyThroughTest : MonoBehaviour {
         foreach (var dollyCart in dollyCarts) {
             dollyCart.m_Speed = 0f;
         }
-        playerRigidbody = Player.GetComponent<Rigidbody>();
     }
 
     void Update() {
@@ -28,11 +27,13 @@ public class FlyThroughTest : MonoBehaviour {
 
     void CheckFlyThroughPoints() {
         for (int i = 0; i < FlyThroughPoints.Length; i++) {
-            Collider flyThroughCollider = FlyThroughPoints[i].GetComponent<Collider>();
-            if (flyThroughCollider.bounds.Contains(Player.transform.position)) {
-                FlyThroughPoints[i].SetActive(false);
-                StartCoroutine(ActivateFlyThroughMethod(i));
-                break;
+            Collider[] flyThroughColliders = FlyThroughPoints[i].GetComponents<Collider>();
+            foreach (var flyThroughCollider in flyThroughColliders) {
+                if (flyThroughCollider.bounds.Contains(Player.transform.position)) {
+                    FlyThroughPoints[i].SetActive(false);
+                    StartCoroutine(ActivateFlyThroughMethod(i));
+                    break;
+                }
             }
         }
     }

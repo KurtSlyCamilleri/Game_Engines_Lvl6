@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: 0
+  PickAmount: 0
 --- !u!1 &2598233575949565372
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,12 +246,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FlyThroughPoints:
   - {fileID: 0}
-  - {fileID: 0}
   dollyCarts:
-  - {fileID: 0}
   - {fileID: 0}
   virtualCameras:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
   Player: {fileID: 0}
+  playerMovement: {fileID: 0}
+  playerRigidbody: {fileID: 0}
